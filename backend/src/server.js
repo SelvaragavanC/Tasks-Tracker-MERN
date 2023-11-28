@@ -11,8 +11,14 @@ const groupRoutes = require("./routes/groups.js");
 
 //connecting Db
 const {connectDb} = require("./DB-Connection/db.js");
-
 connectDb();
+
+//importing models
+const verifyUserModel = require("./models/verifyUser.js")
+const userModel = require("./models/user.js")
+const groupModel = require("./models/groups.js")
+const todoModel = require("./models/todo.js")
+
 
 dotenv.config();
 const PORT = process.env.PORT||4000;
