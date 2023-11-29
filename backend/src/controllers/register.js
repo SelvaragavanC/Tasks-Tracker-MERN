@@ -1,4 +1,5 @@
 const verifyUserModel = require("../models/verifyUser.js")
+const userModel = require("../models/user.js")
 const {alreadyAnUser} = require("./login.js")
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
@@ -31,7 +32,7 @@ const verifyAnUser = async (username,email,password)=>{
             return true
         }
     }catch(err){
-        console.log("An error occured while verifying"+err)
+        console.log("An error occured while verifying=> "+err)
         return -1
     }
 }
@@ -51,4 +52,28 @@ const hashPassword =  async (password)=>{
     }
 }
 
-module.exports = {verifyAnUser}
+//verifying user via email
+const verifyToken = async (token)=>{
+    try{
+        const user = await verifyUserModel.findOne({token:token})
+        if(user){
+            await verifyUserModel.deleteMany({email:user.email})
+            const newUser = new userModel({
+                username:user.username,
+                email:user.email,
+                password:user.password,
+                token:user.token,
+                groupsIn:[]
+            })
+            await newUser.save()
+            return true
+        }else{
+            return false
+        }
+    }catch(err){
+        console.log(err)
+        throw err
+    }
+}
+
+module.exports = {verifyAnUser,verifyToken}

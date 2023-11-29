@@ -1,5 +1,5 @@
 const express = require("express");
-const {verifyAnUser} = require("../controllers/register")
+const {verifyAnUser, verifyToken} = require("../controllers/register")
 const router = express.Router();
 
 router.post("/", async (req,res)=>{
@@ -19,6 +19,20 @@ router.post("/", async (req,res)=>{
         res.send(err.message);
     }
 
+})
+
+router.post("/verify",async (req,res)=>{
+    try{
+        const token = req.body.token
+        const responseFromController = await verifyToken(token)
+        if(responseFromController){
+            res.send("We had succesfully verified Your email, Login to continue")
+        }else{
+            res.send("You haven't registered. Please register first")
+        }
+    }catch(err){
+        res.send("an error occured while logging in")
+    }
 })
 
 module.exports = router
