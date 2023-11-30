@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyLogin } = require("../controllers/login");
+const { verifyLogin, getUserFromRedis } = require("../controllers/login");
 const router = express.Router();
 
 router.post("/",async (req,res)=>{
@@ -11,5 +11,15 @@ router.post("/",async (req,res)=>{
         res.send("An error occured while logging in")
     }
 });
+
+router.post("/sessionedUser",async (req,res)=>{
+    try{
+        const token = req.body.token
+        res.send(await getUserFromRedis(token))
+    }catch(err){
+        console.log(err)
+        res.send(false)
+    }
+})
 
 module.exports = router;

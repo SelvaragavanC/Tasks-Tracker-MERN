@@ -1,0 +1,7 @@
+Day-4
+Login controllers done, Verifying email done :)
+
+
+Day-5
+Made redis session management.
+Created groups and added that reference to users collection.
