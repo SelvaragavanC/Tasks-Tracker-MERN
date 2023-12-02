@@ -1,3 +1,7 @@
+Todo:
+add frontend url to .env
+write frontend for mail links too.
+
 Day-4
 Login controllers done, Verifying email done :)
 
@@ -5,3 +9,9 @@ Login controllers done, Verifying email done :)
 Day-5
 Made redis session management.
 Created groups and added that reference to users collection.
+
+
+Day-5
+Request to join a groups
+accept Request By admin
+fetch all groups of an user

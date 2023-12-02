@@ -11,12 +11,12 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-const sendMail =  (to,html)=>{
+const sendMail =  (to,html,sub="verify Your Account!!!")=>{
     try{
         transporter.sendMail({
             from:"selvaragavan.ct@gmail.com",
             to:to,
-            subject:"Verify your Account!!!",
+            subject:sub,
             html:html
         },(err,info)=>{
             if(err){

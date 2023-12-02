@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup } = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser } = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -16,6 +16,36 @@ router.post("/create",async (req,res)=>{
         res.send("An error occured,Please try again later")
     }
 });
+
+router.post("/sendRequest",async (req,res)=>{
+    try{
+        const {groupId,reqBy} = req.body
+        res.send(await reqAGroup(groupId,reqBy))
+    }catch(err){
+        console.log(err);
+        res.send("request not sent!, Try again later")
+    }
+})
+
+router.post("/acceptRequest",async (req,res)=>{
+    try{
+        const {groupId,userId} = req.body
+        res.send(await acceptAUser(groupId,userId))
+    }catch(err){
+        console.log(err)
+        res.send("can't accept him/her")
+    }
+})
+
+router.post("/userGroups",async (req,res)=>{
+    try{
+        const userId = req.body.userId;
+        res.send(await fetchGroupsOfUser(userId))
+    }catch(err){
+        console.log(err)
+        res.send("Server Busy, Please try again later")
+    }
+})
 
 router.post("/delete",(req,res)=>res.send("Trying to delete a group"));
 
