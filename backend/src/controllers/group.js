@@ -1,5 +1,6 @@
 const groupModel = require("../models/groups")
 const userModel = require("../models/user.js")
+const tasksModel = require("../models/todo.js")
 const {sendMail} = require("../controllers/sendMail.js")
 
 const addGroup = async (groupName,groupAdmin,description)=>{
@@ -49,4 +50,34 @@ const fetchGroupsOfUser = async (userId)=>{
     return groups
 }
 
-module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser}
+const deleteGroup = async (groupId)=>{
+    const group = await groupModel.findOne({_id:groupId})
+    await groupModel.deleteOne({_id:groupId})
+    return "Group Deleted"
+}
+
+const addTasks =async (groupId,taskDetails)=>{
+    const newTask = new tasksModel({
+        checked:false,
+        content:taskDetails.content,
+        assignedTo:taskDetails.assignedTo,
+        dd:taskDetails.dd  
+    })
+    await newTask.save()
+    await groupModel.updateOne({_id:groupId},{$push:{todo:newTask._id}})
+    return "Added task!"
+}
+
+const delTask = async(taskId,groupId)=>{
+    await tasksModel.deleteOne({_id:taskId})
+    await groupModel.updateOne({_id:groupId},{$pull:{todo:taskId}})
+    return "Task Deleted"
+}
+
+const fetchTodo = async(groupId)=>{
+    const group = await groupModel.findById(groupId)
+    const todos = await tasksModel.find({_id:{$in:group.todo}})
+    return todos
+}
+
+module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo}

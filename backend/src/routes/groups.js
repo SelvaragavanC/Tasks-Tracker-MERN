@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser } = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo} = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -47,13 +47,47 @@ router.post("/userGroups",async (req,res)=>{
     }
 })
 
-router.post("/delete",(req,res)=>res.send("Trying to delete a group"));
+router.post("/delete",async (req,res)=>{
+    try{
+        const {groupId} = req.body;
+        res.send(await deleteGroup(groupId))
+    }catch(err){
+        console.log(err)
+        res.send("Sorry You Can't delete this group.")
+    }
+});
 
-router.get("/:id",(req,res)=>res.send("fetching group info"));
+router.post("/:id/addTask",async (req,res)=>{
+    try{
+        const groupId = req.params.id
+        const taskDetails = req.body.taskDetails
+        res.send(await addTasks(groupId,taskDetails))
+    }catch(err){
+        console.log(err)
+        res.send("Sorry An error occured while adding tasks :(")
+    }
+});
 
-router.post("/:id/addTask",(req,res)=>res.send("adding tasks"));
+router.post("/:id/delTask",async (req,res)=>{
+    try{
+        const taskId = req.body.taskId
+        const groupId = req.params.id
+        res.send(await delTask(taskId,groupId) )
+    }catch(err){
+        console.log(err)
+        res.send("An error occured while deleting this")
+    }
+});
 
-router.post("/:id/delTask",(req,res)=>res.send("deleting tasks"));
+router.post("/fetchTasks",async (req,res)=>{
+    try{
+        const groupId = req.body.groupId
+        res.send(await fetchTodo(groupId))
+    }catch(err){
+        console.log(err)
+        res.send("Sorry Try again later")
+    }
+})
 
 
 module.exports = router;

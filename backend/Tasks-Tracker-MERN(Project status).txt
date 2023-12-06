@@ -1,6 +1,7 @@
 Todo:
 add frontend url to .env
 write frontend for mail links too.
+Add condition to check groupAdmin is the current user. If then he/she should have add task and delete button else he/she should only have leave group button
 
 Day-4
 Login controllers done, Verifying email done :)
@@ -11,7 +12,13 @@ Made redis session management.
 Created groups and added that reference to users collection.
 
 
-Day-5
+Day-6
 Request to join a groups
 accept Request By admin
 fetch all groups of an user
+
+Day-7
+Delete group by admin
+add task by admin 
+delete task by admin
+fetch tasks of a group
