@@ -50,8 +50,8 @@ const fetchGroupsOfUser = async (userId)=>{
     return groups
 }
 
-const deleteGroup = async (groupId)=>{
-    const group = await groupModel.findOne({_id:groupId})
+const deleteGroup = async (groupId,userId)=>{
+    await userModel.updateOne({_id:userId},{$pull:{"groupsIn":groupId}})
     await groupModel.deleteOne({_id:groupId})
     return "Group Deleted"
 }
@@ -80,4 +80,11 @@ const fetchTodo = async(groupId)=>{
     return todos
 }
 
-module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo}
+const fetchUsersAndAdmin = async (groupId)=>{
+    const group = await groupModel.findById(groupId)
+    const members = await userModel.find({_id:{$in:group.members}})
+    const admin = await userModel.findById(group.groupAdmin)
+    return {members:members,admin:admin}
+}
+
+module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,fetchUsersAndAdmin}

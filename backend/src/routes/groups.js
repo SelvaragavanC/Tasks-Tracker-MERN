@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo} = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,fetchUsersAndAdmin} = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -49,8 +49,8 @@ router.post("/userGroups",async (req,res)=>{
 
 router.post("/delete",async (req,res)=>{
     try{
-        const {groupId} = req.body;
-        res.send(await deleteGroup(groupId))
+        const {groupId,userId} = req.body;
+        res.send(await deleteGroup(groupId,userId))
     }catch(err){
         console.log(err)
         res.send("Sorry You Can't delete this group.")
@@ -86,6 +86,16 @@ router.post("/fetchTasks",async (req,res)=>{
     }catch(err){
         console.log(err)
         res.send("Sorry Try again later")
+    }
+})
+
+router.post("/fetchUsers",async (req,res)=>{
+    try{
+        const groupId = req.body.groupId
+        res.send(await fetchUsersAndAdmin(groupId))
+    }catch(err){
+        console.log(err)
+        res.send("Sorry an error occured while fetching members :(")
     }
 })
 
