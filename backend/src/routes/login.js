@@ -8,7 +8,7 @@ router.post("/",async (req,res)=>{
         const responseFromController = await verifyLogin(email,password)
         res.send(responseFromController)
     }catch(err){
-        res.send("An error occured while logging in")
+        res.status(404).send("An error occured while logging in")
     }
 });
 

@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NavItem from './navItem'
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import MobHeader from './MobHeader';
+import { MyContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  //hooks
   const [toggler,updateToggler] = useState(true)
   const handleToggler = (e)=>{
     updateToggler(prev=>!prev)
   }
+  const navigate = useNavigate()
+
+  //context
+  const {user} = useContext(MyContext)
+
+  
+
   const items  = [
     {
       content:"Home",
@@ -29,7 +39,7 @@ function Header() {
   ]
   return (
     <div className='p-0'>
-      <div className="bg-white h-12 flex items-center justify-between px-3 rounded relative z-10">
+      <div className="bg-white h-12 flex items-center justify-between px-3 rounded relative z-20">
           <div className='text-2xl font-bold tracking-wide ml-2 '>TaskX</div>
           <div className='sm:flex hidden  gap-5'>
             {items.map(element=>{
@@ -39,7 +49,7 @@ function Header() {
             })}
           </div>
           <div className="flex items-center gap-3">
-            <div className='rounded bg-green-500 p-1 text-white px-5 cursor-pointer'>Login</div>
+            {user.name?<div className='rounded-full bg-green-500 w-10 h-10 text-white flex items-center justify-center text-2xl'>{user.name.substring(0,1)}</div>:<div className='rounded bg-green-500 p-1 text-white px-5 cursor-pointer' onClick={()=>navigate("/login")}>Login</div>}
             <button className='sm:hidden' onClick={handleToggler}>{toggler?<FaBarsStaggered/>:<IoCloseSharp/>}</button>
           </div>
       </div>
