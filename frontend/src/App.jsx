@@ -4,6 +4,7 @@ import Login from './components/loginPages/Login'; // Ensure the correct import 
 import Alert from './components/alertPage/Alert';
 import Home from './components/homePage/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Verify from './components/loginPages/Verify';
 
 export const MyContext = React.createContext();
 
@@ -29,6 +30,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/:id" element={<Verify/>} />
           </Routes>
           <Alert alert={alert} />
         </MyContext.Provider>

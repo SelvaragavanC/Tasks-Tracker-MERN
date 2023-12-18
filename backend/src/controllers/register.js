@@ -11,15 +11,15 @@ dotenv.config()
 
 
 const verifyAnUser = async (username,email,password)=>{
-    try{
+    
         if(await alreadyAnUser(email)){
-            return false
+            return "You're Already An User"
         }else{
             const token = createtoken(email)
-            const htmlContent = `<p>Please verify your account by clicking the below link.</p><br><a href=${process.env.URL}/${token}>Click Here</a>`
+            const htmlContent = `<p>Please verify your account by clicking the below link.</p><br><a href=${process.env.frontend_URL}/${token}>Click Here</a>`
             const hashedPassword =  await hashPassword(password)
             if(hashedPassword==-1){
-                return -1
+                throw new Error()
             }
             sendMail(email,htmlContent)
             const verifyUser = new verifyUserModel({
@@ -29,12 +29,9 @@ const verifyAnUser = async (username,email,password)=>{
                 token:token
             })
             await verifyUser.save()
-            return true
+            return "We had sent you an verification mail."
         }
-    }catch(err){
-        console.log("An error occured while verifying=> "+err)
-        return -1
-    }
+    
 }
 
 const createtoken = (email)=>{

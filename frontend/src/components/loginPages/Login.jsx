@@ -50,6 +50,25 @@ function Login() {
         }
     }
 
+    const signup = async (e)=>{
+        if(emails.signup.indexOf("@")==-1){
+            updateFocus(prev=>{return {...prev,signup:true}})
+            return
+        }
+        const childrens = e.target.parentElement.children
+        const name = childrens[2].value
+        const email = childrens[4].value
+        const password = childrens[6].value
+        updateAlert({bg:"yellow",content:"Please wait, It may take few seconds to hash your passwords to store it securely.",display:"show"})
+        try{
+            const response = await axios.post(`${url}/register`,{username:name,email:email,password:password})
+            updateAlert({bg:"green",content:response.data,display:"show"})
+        }catch(err){
+            updateAlert({bg:"red",content:err.response.data,display:"show"})
+        }
+        navigate("/login")
+    }
+
     
   return (
     <div>
@@ -89,7 +108,7 @@ function Login() {
             
             <label htmlFor="Spassword">Password</label>
             <input className='border-gray-400 border-2 rounded focus:border-green-500 outline-none' type="password" id='Spassword' autoComplete='on'/>
-            <button className='bg-green-500 rounded'>Login</button>
+            <button className='bg-green-500 rounded ' onClick={signup}>Register</button>
             <p>Already have an account? <span className="text-blue-800 cursor-pointer"onClick={()=>updateLSToggler({login:"left-1/2",signup:"-left-1/2"})}>Login</span></p>
         </div>
     </div>

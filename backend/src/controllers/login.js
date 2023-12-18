@@ -29,7 +29,7 @@ const verifyLogin = async (email,password)=>{
             const isSame = await bcrypt.compare(password,user.password)
             if(isSame){
                 redisClient.set(user.token,user.toString())
-                return user
+                return {_id:user.id,username:user.username}
             }else{
                 return false
             }
