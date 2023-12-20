@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyLogin, getUserFromRedis } = require("../controllers/login");
+const { verifyLogin, getUserFromRedis, fetchUserDetails } = require("../controllers/login");
 const router = express.Router();
 
 router.post("/",async (req,res)=>{
@@ -12,13 +12,24 @@ router.post("/",async (req,res)=>{
     }
 });
 
-router.post("/sessionedUser",async (req,res)=>{
+router.post("/user",async(req,res)=>{
     try{
-        const token = req.body.token
-        res.send(await getUserFromRedis(token))
+        const id = req.body.id
+        res.send(await fetchUserDetails(id))
     }catch(err){
         console.log(err)
-        res.send(false)
+        res.status(404).send("An error occurred while fetching details")
+    }
+})
+
+router.post("/sessionedUser",async (req,res)=>{
+    try{
+        const id = req.body.id
+        res.setHeader('Content-Type', 'application/json')
+        res.send(await getUserFromRedis(id))
+    }catch(err){
+        console.log(err)
+        res.status(404).send("session timed out")
     }
 })
 

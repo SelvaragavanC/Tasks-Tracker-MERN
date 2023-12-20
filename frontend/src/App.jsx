@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Header from './components/navbarComponents/Header';
-import Login from './components/loginPages/Login'; // Ensure the correct import path
+import Login from './components/loginPages/login';
 import Alert from './components/alertPage/Alert';
 import Home from './components/homePage/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Verify from './components/loginPages/Verify';
+import Profile from './components/profilePageComponents/Profile';
 
 export const MyContext = React.createContext();
 
@@ -18,8 +19,8 @@ function App() {
 
   const [user, updateUser] = useState({
     name: '',
-    email: '',
-    password: '',
+    _id: '',
+    token: '',
   });
 
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/:id" element={<Verify/>} />
+            <Route path='/user' element={<Profile/>}/>
           </Routes>
           <Alert alert={alert} />
         </MyContext.Provider>

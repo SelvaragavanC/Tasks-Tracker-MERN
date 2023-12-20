@@ -1,6 +1,33 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import url from '../../url'
+import axios from 'axios'
+import {MyContext} from '../../App'
 
 function Home() {
+  const {updateUser,updateAlert,user} = useContext(MyContext)
+  useEffect(()=>{
+    async function get(){
+      const userId = localStorage.getItem("task-id")
+      
+      if(userId){
+        try{
+          let user = await axios.post(`${url}/login/sessionedUser`,{id:userId})
+          
+          user = JSON.parse(user.data)
+          
+          updateUser({_id:user._id,name:user.username})
+          updateAlert({bg:"green",content:`logged in as ${user.username}`,display:"show"})
+        }catch(err){
+          updateAlert({bg:"red",content:"Session timed out",display:"show"})
+        }
+      }else{
+        updateAlert({bg:"yellow",content:"Please login!",display:"show"})
+      }
+    }
+    if(!user.name){
+      get()
+    }
+  },[])
   return (
     <>
       <div className='relative left-1/2 -translate-x-1/2 w-11/12 h-max px-5 bg-white rounded backdrop-blur-sm p-2 flex flex-col gap-2 mt-5'>

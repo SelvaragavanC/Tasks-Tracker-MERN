@@ -39,8 +39,9 @@ function Login() {
             if(! response.data){
                 updateAlert({bg:"red",content:"Invalid Creadentials",display:"show"})
             }else{
-                updateAlert({bg:"green",content:"Login sucessful",display:"show"})
-                updateUser({name:response.data.username,email:response.data.email,password:response.data.password})
+                updateAlert({bg:"green",content:"Logged in as "+response.data.username,display:"show"})
+                updateUser({name:response.data.username,_id:response.data._id,token:response.data.token})
+                localStorage.setItem("task-id",response.data._id)
                 navigate("/")
 
             }

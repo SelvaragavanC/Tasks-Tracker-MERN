@@ -28,8 +28,8 @@ const verifyLogin = async (email,password)=>{
         if(user){
             const isSame = await bcrypt.compare(password,user.password)
             if(isSame){
-                redisClient.set(user.token,user.toString())
-                return {_id:user.id,username:user.username}
+                redisClient.set(user._id.toString(),JSON.stringify({_id:user._id,username:user.username}))
+                return {_id:user._id,username:user.username,token:user.token}
             }else{
                 return false
             }
@@ -41,14 +41,23 @@ const verifyLogin = async (email,password)=>{
     }
 }
 
-const getUserFromRedis = async (token)=>{
+const getUserFromRedis = async (id)=>{
     try{
-        const user = await redisClient.get(token)
-        return user? user:false
+        const user = await redisClient.get(id.toString())
+        return user? JSON.stringify(user):false
     }catch(err){
         console.log(err)
         throw err
     }
 }
 
-module.exports = {alreadyAnUser,verifyLogin,getUserFromRedis}
+const fetchUserDetails = async(userId)=>{
+    const user = await userModel.findById(userId,{username:1,email:1})
+    if(user){
+        return user
+    }else{
+        throw new Error()
+    }
+}
+
+module.exports = {alreadyAnUser,verifyLogin,getUserFromRedis,fetchUserDetails}

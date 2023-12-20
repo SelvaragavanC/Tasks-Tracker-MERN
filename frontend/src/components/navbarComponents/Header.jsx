@@ -49,7 +49,7 @@ function Header() {
             })}
           </div>
           <div className="flex items-center gap-3">
-            {user.name?<div className='rounded-full bg-green-500 w-10 h-10 text-white flex items-center justify-center text-2xl'>{user.name.substring(0,1)}</div>:<div className='rounded bg-green-500 p-1 text-white px-5 cursor-pointer' onClick={()=>navigate("/login")}>Login</div>}
+            {user.name?<div className='rounded-full bg-green-500 w-10 h-10 text-white flex items-center justify-center text-2xl cursor-pointer' onClick={()=>navigate("/user")}>{user.name.substring(0,1)}</div>:<div className='rounded bg-green-500 p-1 text-white px-5 cursor-pointer' onClick={()=>navigate("/login")}>Login</div>}
             <button className='sm:hidden' onClick={handleToggler}>{toggler?<FaBarsStaggered/>:<IoCloseSharp/>}</button>
           </div>
       </div>
