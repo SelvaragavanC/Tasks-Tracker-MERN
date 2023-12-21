@@ -59,7 +59,6 @@ const verifyToken = async (token)=>{
                 username:user.username,
                 email:user.email,
                 password:user.password,
-                token:user.token,
                 groupsIn:[]
             })
             await newUser.save()

@@ -6,6 +6,9 @@ import Home from './components/homePage/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Verify from './components/loginPages/Verify';
 import Profile from './components/profilePageComponents/Profile';
+import axios from 'axios';
+import url from './url';
+import CreateGroup from './components/GroupsComponents/CreateGroup';
 
 export const MyContext = React.createContext();
 
@@ -20,19 +23,38 @@ function App() {
   const [user, updateUser] = useState({
     name: '',
     _id: '',
-    token: '',
   });
+
+  const getUser = async ()=>{
+    const userId = localStorage.getItem("task-id")
+    
+    if(userId){
+      try{
+        let user = await axios.post(`${url}/login/sessionedUser`,{id:userId})
+        
+        user = JSON.parse(user.data)
+        
+        updateUser({_id:user._id,name:user.username})
+        updateAlert({bg:"green",content:`logged in as ${user.username}`,display:"show"})
+      }catch(err){
+        updateAlert({bg:"red",content:"session Timed out",display:"show"})
+      }
+    }else{
+      updateAlert({bg:"yellow",content:"Please login!",display:"show"})
+    }
+  }
 
   return (
     <>
       <Router>
-        <MyContext.Provider value={{ updateAlert, updateUser, user }}>
+        <MyContext.Provider value={{ updateAlert, updateUser, user,getUser }}>
           <Header />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/:id" element={<Verify/>} />
             <Route path='/user' element={<Profile/>}/>
+            <Route path='/create' element={<CreateGroup/>} />
           </Routes>
           <Alert alert={alert} />
         </MyContext.Provider>

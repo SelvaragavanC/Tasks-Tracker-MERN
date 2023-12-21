@@ -13,7 +13,7 @@ router.post("/create",async (req,res)=>{
         }
     }catch(err){
         console.log(err);
-        res.send("An error occured,Please try again later")
+        res.status(404).send("An error occured,Please try again later")
     }
 });
 
