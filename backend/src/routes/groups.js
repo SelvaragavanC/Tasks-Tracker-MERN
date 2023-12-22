@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,fetchUsersAndAdmin} = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,fetchUsersAndAdmin,getAdmin} = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -96,6 +96,17 @@ router.post("/fetchUsers",async (req,res)=>{
     }catch(err){
         console.log(err)
         res.send("Sorry an error occured while fetching members :(")
+    }
+})
+
+router.get("/user/:id",async (req,res)=>{
+    const id = req.params.id
+    try{
+        const name = await getAdmin(id)
+        res.send(name)
+    }catch(err){
+        console.log(err)
+        res.status(404).send("No One")
     }
 })
 

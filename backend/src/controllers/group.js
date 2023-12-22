@@ -43,11 +43,8 @@ const acceptAUser = async (groupId,userId)=>{
 }
 
 const fetchGroupsOfUser = async (userId)=>{
-    const user = await userModel.findOne({_id:userId})
-    const userGroups = user.groupsIn
-    const groups = await groupModel.find({_id:{$in:userGroups}})
-
-    return groups
+    const groups = await userModel.findById(userId,{_id:0,groupsIn:1}).populate({path:'groupsIn',select:'groupName groupAdmin description'})
+    return groups.groupsIn
 }
 
 const deleteGroup = async (groupId,userId)=>{
@@ -87,4 +84,9 @@ const fetchUsersAndAdmin = async (groupId)=>{
     return {members:members,admin:admin}
 }
 
-module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,fetchUsersAndAdmin}
+const getAdmin = async (id)=>{
+    const user =  await userModel.findById(id,{username:1})
+    return user.username
+}
+
+module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,fetchUsersAndAdmin,getAdmin}

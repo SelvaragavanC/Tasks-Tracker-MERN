@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password:String,
     token:String,
     groupsIn:[{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'groups'
     }]
 })
 
