@@ -1,9 +1,9 @@
 import React from 'react'
-import { IoReload } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Loading() {
   return (
-    <div className='w-max h-max relative'><div className='animate-spin'><IoReload/></div></div>
+    <div className='w-max h-max relative'><div className='animate-spin'><AiOutlineLoading3Quarters/></div></div>
   )
 }
 
