@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,fetchUsersAndAdmin,getAdmin} = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo} = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -79,25 +79,17 @@ router.post("/:id/delTask",async (req,res)=>{
     }
 });
 
-router.post("/fetchTasks",async (req,res)=>{
+router.get("/fetchTasks/:id",async (req,res)=>{
     try{
-        const groupId = req.body.groupId
+        const groupId = req.params.id
         res.send(await fetchTodo(groupId))
     }catch(err){
         console.log(err)
-        res.send("Sorry Try again later")
+        res.status(404).send("Sorry Try again later")
     }
 })
 
-router.post("/fetchUsers",async (req,res)=>{
-    try{
-        const groupId = req.body.groupId
-        res.send(await fetchUsersAndAdmin(groupId))
-    }catch(err){
-        console.log(err)
-        res.send("Sorry an error occured while fetching members :(")
-    }
-})
+
 
 router.get("/user/:id",async (req,res)=>{
     const id = req.params.id
@@ -107,6 +99,39 @@ router.get("/user/:id",async (req,res)=>{
     }catch(err){
         console.log(err)
         res.status(404).send("No One")
+    }
+})
+
+router.get("/users/:id",async(req,res)=>{
+    const id = req.params.id
+    try{
+        const response = await getGroupUsers(id)
+        res.send(response)
+    }catch(err){
+        console.log(err)
+        res.status(404).send("An error occured! Please refresh")
+    }
+})
+
+router.get("/headers/:id",async (req,res)=>{
+    const id = req.params.id
+    try{
+        res.send(await fetchGroupHeaders(id))
+    }catch(err){
+        console.log(err)
+        res.status(404).send("An error occurred")
+    }
+})
+
+router.post("/updateTodo/:id",async(req,res)=>{
+    try{
+        const _id = req.params.id;
+        const checked = req.body.checked
+        await updateTodo(_id,checked)
+        res.send("Succesfully updated")
+    }catch(err){
+        console.log(err)
+        res.status(404).send("Sorry cant update")
     }
 })
 

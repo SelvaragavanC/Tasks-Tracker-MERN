@@ -10,6 +10,7 @@ import axios from 'axios';
 import url from './url';
 import CreateGroup from './components/GroupsComponents/CreateGroup';
 import FetchGroups from './components/GroupsComponents/FetchGroups';
+import GroupDetails from './components/GroupsComponents/GroupDetails';
 
 export const MyContext = React.createContext();
 
@@ -57,6 +58,7 @@ function App() {
             <Route path='/user' element={<Profile/>}/>
             <Route path='/create' element={<CreateGroup/>} />
             <Route path='/groups' element={<FetchGroups/>} />
+            <Route  path='/groups/:id' element = {<GroupDetails/>}/>
           </Routes>
           <Alert alert={alert} />
         </MyContext.Provider>

@@ -38,8 +38,8 @@ function Header() {
     }
   ]
   return (
-    <div className='p-0'>
-      <div className="bg-white h-12 flex items-center justify-between px-3 rounded relative z-20">
+    <div className='p-0 '>
+      <div className="bg-white h-12 flex items-center justify-between px-3 rounded fixed z-20 top-0 w-full">
           <div className='text-2xl font-bold tracking-wide ml-2 '>TaskX</div>
           <div className='sm:flex hidden  gap-5'>
             {items.map(element=>{

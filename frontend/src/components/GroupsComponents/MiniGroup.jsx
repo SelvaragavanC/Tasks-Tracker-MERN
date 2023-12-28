@@ -7,7 +7,8 @@ function MiniGroup({groupName,description,groupAdmin,_id}) {
   const {user} = useContext(MyContext)
   const navigate = useNavigate()
   return (
-    <div className='bg-white w-11/12 rounded p-2 cursor-pointer max-w-md flex flex-col gap-4' onClick={()=>navigate(`/group/${_id}`)}>
+    <div className='bg-white w-11/12 rounded p-2 cursor-pointer max-w-md flex flex-col gap-4'
+     onClick={()=>navigate(`/groups/${_id}`) }>
         <h1 className="text-3xl text-center font-mono"> {groupName}</h1>
         <div className='text-center text-lg'><GroupAdmin id={groupAdmin}/></div>
         <p className='text-center text-lg'>Description: {description}</p>

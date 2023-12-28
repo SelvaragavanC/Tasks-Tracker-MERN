@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { MyContext } from '../../App'
 import url from '../../url'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 
 function Login() {
     //true->Login false->Signup
@@ -13,7 +13,6 @@ function Login() {
     signup:false,
    })
    const navigate = useNavigate()
-
    //context
    const {updateAlert,updateUser} = useContext(MyContext)
 

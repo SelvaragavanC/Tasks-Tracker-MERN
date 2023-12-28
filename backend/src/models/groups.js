@@ -8,7 +8,7 @@ const groupsSchema = new mongoose.Schema({
         type:String
     }],
     todo:[{
-        type:String
+        type:mongoose.SchemaTypes.ObjectId
     }]
 })
 

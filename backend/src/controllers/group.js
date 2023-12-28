@@ -2,6 +2,7 @@ const groupModel = require("../models/groups")
 const userModel = require("../models/user.js")
 const tasksModel = require("../models/todo.js")
 const {sendMail} = require("../controllers/sendMail.js")
+const { response } = require("express")
 
 const addGroup = async (groupName,groupAdmin,description)=>{
     try{
@@ -24,7 +25,7 @@ const reqAGroup = async (groupId,reqBy) => {
     const group = await groupModel.findOne({_id:groupId})
     if(group){
         const admin = await userModel.findOne({_id:group.groupAdmin})
-        const reqURL = `${process.env.URL}/${groupId}/${reqBy._id}/accept`
+        const reqURL = `${process.env.frontend_URL}/${groupId}/${reqBy._id}/accept`
         const content = `<h1>Hello ${admin.username},</h1><br><p>Mr/Mrs ${reqBy.username} requested to join your group (${group.groupName})</p><br><button><a href=${reqURL}>Accept</a></button>`
         sendMail(admin.email,content,"Someone requested to join your group->Tasks-Tracker-selvaragavan");
         return "Request Sent!"
@@ -77,16 +78,28 @@ const fetchTodo = async(groupId)=>{
     return todos
 }
 
-const fetchUsersAndAdmin = async (groupId)=>{
-    const group = await groupModel.findById(groupId)
-    const members = await userModel.find({_id:{$in:group.members}})
-    const admin = await userModel.findById(group.groupAdmin)
-    return {members:members,admin:admin}
-}
 
 const getAdmin = async (id)=>{
     const user =  await userModel.findById(id,{username:1})
     return user.username
 }
 
-module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,fetchUsersAndAdmin,getAdmin}
+const getGroupUsers = async (groupId) => {
+    const response = await groupModel.findById(groupId)
+    const users = await userModel.find({_id:{$in:response.groupMembers}},{_id:1,username:1})
+    
+
+    return users;
+}
+
+const fetchGroupHeaders = async (id)=>{
+    return await groupModel.findById(id,{_id:0,groupName:1,description:1,groupAdmin:1})
+}
+
+
+const updateTodo = async(_id,checked)=>{
+    await tasksModel.findByIdAndUpdate(_id,{$set:{checked:checked}})
+}
+
+
+module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo}

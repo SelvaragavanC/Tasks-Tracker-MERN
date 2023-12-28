@@ -12,7 +12,7 @@ function Home() {
   },[])
   return (
     <>
-      <div className='relative left-1/2 -translate-x-1/2 w-11/12 h-max px-5 bg-white rounded backdrop-blur-sm p-2 flex flex-col gap-2 mt-5'>
+      <div className='relative left-1/2 -translate-x-1/2 w-11/12 h-max px-5 bg-white rounded backdrop-blur-sm p-2 flex flex-col gap-2 mt-16'>
         <h1 className='text-2xl'>
           what's new?
         </h1>

@@ -12,6 +12,10 @@ function Profile({id}) {
     const [isLoading,updateIsLoading] = useState(true)
     const navigate = useNavigate()
     useEffect(()=>{
+        if(!user._id){
+            navigate("/")
+            return;
+        }
         (async function get(){
             updateIsLoading(true);
             try{
@@ -24,7 +28,7 @@ function Profile({id}) {
         })()
     },[user])
   return (
-    <div className='max-w-lg w-11/12 bg-white flex flex-col gap-2 p-2 relative left-1/2 -translate-x-1/2 top-2 h-max flex flex-col gap-2 items-center '>
+    <div className='max-w-lg w-11/12 bg-white flex flex-col gap-2 p-2 relative left-1/2 -translate-x-1/2 top-2 h-max flex flex-col gap-2 items-center mt-16 '>
         {isLoading?<Loading/>:<>
         <div className='w-20 h-20 bg-green-500 flex items-center justify-center rounded-full text-2xl'>{userDetails.username && userDetails.username.substring(0,1)}</div>
         <p>{userDetails.username}</p>

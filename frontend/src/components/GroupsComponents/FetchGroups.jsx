@@ -20,7 +20,6 @@ function FetchGroups() {
             try{
                 const response  = await axios.post(`${url}/group/userGroups`,{userId:user._id})
                 setGroups(response.data)
-                console.log(response.data)
             }catch(err){
                 updateAlert({bg:"red",content:err.message,display:"show"})
             }
@@ -28,7 +27,7 @@ function FetchGroups() {
         })()
     },[])
   return (
-    <div>
+    <div className='mt-16'>
         <h1 className="text-2xl text-center font text-gray-600 first-letter:text-3xl first-letter:text-red-700 my-5">GROUPS</h1>
         <div className='flex flex-col gap-2 items-center'>
             { groups?groups.map((element)=>{

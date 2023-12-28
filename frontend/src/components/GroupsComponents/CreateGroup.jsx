@@ -30,7 +30,7 @@ function CreateGroup() {
     }
 
   return (
-    <div className='bg-white w-11/12 max-w-xl flex flex-col items-center justify-evenly p-2 gap-2 relative left-1/2 top-2 -translate-x-1/2 capitalize'>
+    <div className='bg-white w-11/12 max-w-xl flex flex-col items-center justify-evenly p-2 gap-2 relative left-1/2 top-2 -translate-x-1/2 capitalize mt-16'>
         <h1 className='text-2xl'>Create Group</h1>
         <label htmlFor="name" className='self-start'> Group Name: </label>
         <input type="text" name="name" id="name"  className='border-gray-400 border-2 w-full'/>
