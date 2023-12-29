@@ -24,7 +24,7 @@ function GroupHeaders({id,setAdmin}) {
     <div className='bg-white w-11/12 shadow-md shadow-black flex items-center flex-col'>
         {headers.groupName?
              <>
-                <h1 className='text-3xl font-mono '>{headers.groupName}</h1>
+                <h1 className='text-5xl font-mono '>{headers.groupName}</h1>
                 <GroupAdmin id={headers.groupAdmin}/>
                 <p>{headers.description}</p>
              </>

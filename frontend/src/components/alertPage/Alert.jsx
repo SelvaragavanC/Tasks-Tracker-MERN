@@ -16,7 +16,7 @@ function Alert({ alert }) {
   }
 
   return (
-    <div className={`flex  ${styles[bg]} ${styles[display]} w-1/2 h-max absolute items-center justify-between left-1/2 right-1/2 -translate-x-1/2 transition-all duration-500 z-50 border-b-2 border-white p-2 `}>
+    <div className={`flex  ${styles[bg]} ${styles[display]} w-1/2 h-max fixed items-center justify-between left-1/2 right-1/2 -translate-x-1/2 transition-all duration-500 z-50 border-b-2 border-white p-2 `}>
       <p className='overflow-hidden'>{content}</p>
       <button onClick={()=>{updateAlert(prev=>{return {...prev,display:"hidden"}})}}><IoCloseSharp /></button>
     </div>

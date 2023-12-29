@@ -75,7 +75,7 @@ router.post("/:id/delTask",async (req,res)=>{
         res.send(await delTask(taskId,groupId) )
     }catch(err){
         console.log(err)
-        res.send("An error occured while deleting this")
+        res.status(404).send("An error occured while deleting this")
     }
 });
 
