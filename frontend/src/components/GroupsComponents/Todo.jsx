@@ -64,7 +64,7 @@ function Todo({_id,Admin_id,users}) {
 
   return (
     <div className='bg-white p-5 mt-2 w-11/12 flex flex-col gap-5 items-center'>
-        <h1 className='text-2xl  '>Tasks Assigned</h1><span className='text-blue-500 underline' onClick={()=>setRefresh(prev=>!prev)}>(Refresh)</span>
+        <h1 className='text-2xl  '>Tasks Assigned</h1><span className='text-blue-500 underline cursor-pointer' onClick={()=>setRefresh(prev=>!prev)}>(Refresh)</span>
         <div className='w-10/12'>
         {
             todos.length?

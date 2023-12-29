@@ -11,6 +11,7 @@ function FetchGroups() {
     const [groups,setGroups] = useState([])
     const [isLoading,setIsLoading] = useState(true);
     const navigate = useNavigate()
+    const[refresh,setRefresh] = useState(true)
     useEffect(()=>{
         if(!user.name){
             navigate("/")
@@ -25,10 +26,11 @@ function FetchGroups() {
             }
             setIsLoading(false)
         })()
-    },[])
+    },[refresh])
   return (
     <div className='mt-16'>
         <h1 className="text-2xl text-center font text-gray-600 first-letter:text-3xl first-letter:text-red-700 my-5">GROUPS</h1>
+        <button className='text-blue-500 underline relative left-1/2 -translate-x-1/2' onClick={()=>{setRefresh(prev=>!prev)}}>Refresh</button>
         <div className='flex flex-col gap-2 items-center'>
             { groups?groups.map((element)=>{
                 return(
