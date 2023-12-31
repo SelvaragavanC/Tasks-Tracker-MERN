@@ -37,7 +37,7 @@ const reqAGroup = async (groupId,reqBy) => {
 const acceptAUser = async (groupId,userId)=>{
     await groupModel.updateOne({_id:groupId},{$push:{groupMembers:userId}})
     const group = await groupModel.findOne({_id:groupId})
-    const user = await userModel.findOne({_id:userId})
+    const user = await userModel.findOneAndUpdate({_id:userId},{$push:{groupsIn:group._id}})
     const content = `<h1>Hello, ${user.username}</h1><br><p>You're now an member of group ${group.groupName}, Admin accepted your request</p>`
     sendMail(user.email,content,"Accepted Your request!")
     return `Accepted ${user.username}'s request`
@@ -102,4 +102,24 @@ const updateTodo = async(_id,checked)=>{
 }
 
 
-module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo}
+const searchGroups = async (userId, query) => {
+    const groups = await groupModel.find(
+      {
+        $and: [
+          { groupAdmin: { $ne: userId } },
+          { groupMembers: { $ne: userId } },
+          { groupName: { $regex: new RegExp(query, 'i') } } 
+        ]
+      },
+      {
+        _id: 1,
+        groupName: 1,
+        groupAdmin: 1,
+        description: 1
+      }
+    );
+    return groups;
+  };
+  
+
+module.exports = {addGroup,reqAGroup,acceptAUser,fetchGroupsOfUser,deleteGroup,addTasks,delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo,searchGroups}

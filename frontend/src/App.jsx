@@ -11,6 +11,8 @@ import url from './url';
 import CreateGroup from './components/GroupsComponents/CreateGroup';
 import FetchGroups from './components/GroupsComponents/FetchGroups';
 import GroupDetails from './components/GroupsComponents/GroupDetails';
+import SearchGroups from './components/GroupsComponents/searchGroups';
+import AcceptRequest from './components/GroupsComponents/AcceptRequest';
 
 export const MyContext = React.createContext();
 
@@ -59,6 +61,8 @@ function App() {
             <Route path='/create' element={<CreateGroup/>} />
             <Route path='/groups' element={<FetchGroups/>} />
             <Route  path='/groups/:id' element = {<GroupDetails/>}/>
+            <Route  path='/search' element = {<SearchGroups/>}/>
+            <Route path='/:id/:id/accept' element={<AcceptRequest/>}   />
           </Routes>
           <Alert alert={alert} />
         </MyContext.Provider>

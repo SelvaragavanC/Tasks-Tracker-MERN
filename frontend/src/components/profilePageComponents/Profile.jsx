@@ -16,6 +16,7 @@ function Profile({id}) {
             navigate("/")
             return;
         }
+        
         (async function get(){
             updateIsLoading(true);
             try{

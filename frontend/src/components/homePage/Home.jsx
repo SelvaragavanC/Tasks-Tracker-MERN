@@ -14,9 +14,9 @@ function Home() {
     <>
       <div className='relative left-1/2 -translate-x-1/2 w-11/12 h-max px-5 bg-white rounded backdrop-blur-sm p-2 flex flex-col gap-2 mt-16'>
         <h1 className='text-2xl'>
-          what's new?
+          what's TaskX?
         </h1>
-        <p>Nothing is new here. This is a website where you can create groups and assign tasks to the members of your groups</p>
+        <p>This is a website where you can create groups and assign tasks to the members of your groups. This would be helful when you're an team leader and wanted to assign tasks to your teammates!</p>
       </div>
       <div className='relative left-1/2 -translate-x-1/2  w-11/12 h-max px-5 bg-white rounded backdrop-blur-sm p-2 flex flex-col gap-2 mt-5'>
         <h1  className='text-2xl'>

@@ -32,11 +32,11 @@ function FetchGroups() {
         <h1 className="text-2xl text-center font text-gray-600 first-letter:text-3xl first-letter:text-red-700 my-5">GROUPS</h1>
         <button className='text-blue-500 underline relative left-1/2 -translate-x-1/2' onClick={()=>{setRefresh(prev=>!prev)}}>Refresh</button>
         <div className='flex flex-col gap-2 items-center'>
-            { groups?groups.map((element)=>{
+            { groups && groups.map((element)=>{
                 return(
                     <MiniGroup groupName={element.groupName}description = {element.description} groupAdmin={element.groupAdmin} key={element._id} _id={element._id}/>
                 )
-            }):"youre not in any groups, goto search!"}
+            })}
             
         </div>
         <div className='bg-white w-max relative left-1/2 -translate-x-1/2'>

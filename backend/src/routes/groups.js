@@ -1,5 +1,5 @@
 const express = require("express");
-const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo} = require("../controllers/group");
+const { addGroup, reqAGroup, acceptAUser,fetchGroupsOfUser, deleteGroup , addTasks, delTask,fetchTodo,getAdmin,getGroupUsers,fetchGroupHeaders,updateTodo,searchGroups} = require("../controllers/group");
 const router = express.Router();
 
 router.post("/create",async (req,res)=>{
@@ -132,6 +132,16 @@ router.post("/updateTodo/:id",async(req,res)=>{
     }catch(err){
         console.log(err)
         res.status(404).send("Sorry cant update")
+    }
+})
+
+router.get('/search',async (req,res)=>{
+    try{
+        const {id,q} = req.query
+        res.send(await searchGroups(id,q))
+    }catch(err){
+        console.log(err)
+        res.status(404).send("Sorry An Error Occurred")
     }
 })
 

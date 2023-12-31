@@ -22,7 +22,7 @@ function Verify(){
         navigate("/login")
     }
     return(
-        <div className="w-1/2 bg-white flex flex-col gap-2 relative left-1/2 -translate-x-1/2 top-6 p-5">
+        <div className="w-1/2 bg-white flex flex-col gap-2 relative left-1/2 -translate-x-1/2 top-6 p-5 mt-16">
             <p>We just wanted to verify that you're email actually exists :)</p>
             <button className="bg-green-500 p-2" onClick={verify}>Verify</button>
         </div>
