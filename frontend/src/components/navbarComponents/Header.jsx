@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import NavItem from './navItem'
+import NavItem from './NavItem'
 import { FaBarsStaggered } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 import MobHeader from './MobHeader';
