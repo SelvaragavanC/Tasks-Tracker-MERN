@@ -3,10 +3,8 @@ const bcrypt = require("bcrypt")
 const {getClient} = require("../DB-Connection/redis.js")
 
 
-let redisClient = undefined;
-(async ()=>{
-    redisClient = await getClient()
-})()
+let redisClient = getClient();
+redisClient.connect()
 
 const alreadyAnUser = async (email)=>{
     try{
