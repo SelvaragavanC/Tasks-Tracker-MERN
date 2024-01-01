@@ -16,7 +16,7 @@ const verifyAnUser = async (username,email,password)=>{
             return "You're Already An User"
         }else{
             const token = createtoken(email)
-            const htmlContent = `<p>Please verify your account by clicking the below link.</p><br><a href=${url}/${token}>Click Here</a>`
+            const htmlContent = `<p>Please verify your account by clicking the below link.</p><br><button><a href=${url}/${token}>Click Here</a></button>`
             const hashedPassword =  await hashPassword(password)
             if(hashedPassword==-1){
                 throw new Error()
