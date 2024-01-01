@@ -1,10 +1,10 @@
 const userModel = require("../models/user.js")
 const bcrypt = require("bcrypt")
-const {getClient} = require("../DB-Connection/redis.js")
+// const {getClient} = require("../DB-Connection/redis.js")
 
 
-let redisClient = getClient();
-redisClient.connect()
+// let redisClient = getClient();
+// redisClient.connect()
 
 const alreadyAnUser = async (email)=>{
     try{
@@ -26,7 +26,7 @@ const verifyLogin = async (email,password)=>{
         if(user){
             const isSame = await bcrypt.compare(password,user.password)
             if(isSame){
-                redisClient.set(user._id.toString(),JSON.stringify({_id:user._id,username:user.username}))
+                // redisClient.set(user._id.toString(),JSON.stringify({_id:user._id,username:user.username}))
                 return {_id:user._id,username:user.username,token:user.token}
             }else{
                 return false
@@ -41,8 +41,8 @@ const verifyLogin = async (email,password)=>{
 
 const getUserFromRedis = async (id)=>{
     try{
-        const user = await redisClient.get(id.toString())
-        return user? JSON.stringify(user):false
+        const user = await userModel.findById(id,{_id:1,username:1})
+        return user? user:false
     }catch(err){
         console.log(err)
         throw err

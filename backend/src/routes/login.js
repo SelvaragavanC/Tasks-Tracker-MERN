@@ -25,7 +25,6 @@ router.post("/user",async(req,res)=>{
 router.post("/sessionedUser",async (req,res)=>{
     try{
         const id = req.body.id
-        res.setHeader('Content-Type', 'application/json')
         res.send(await getUserFromRedis(id))
     }catch(err){
         console.log(err)
