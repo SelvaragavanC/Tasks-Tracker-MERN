@@ -1,2 +1,2 @@
-const url = "http://localhost:4000";
+const url = "https://tasks-tracker-mern-api.onrender.com";
 export default url;

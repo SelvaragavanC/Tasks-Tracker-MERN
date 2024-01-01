@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from './components/navbarComponents/Header';
-import Login from './components/loginPages/login';
+import Login from './components/loginPages/Login';
 import Alert from './components/alertPage/Alert';
 import Home from './components/homePage/Home';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -36,11 +36,12 @@ function App() {
       try{
         let user = await axios.post(`${url}/login/sessionedUser`,{id:userId})
         
-        user = JSON.parse(user.data)
+        user = user.data
         
         updateUser({_id:user._id,name:user.username})
         updateAlert({bg:"green",content:`logged in as ${user.username}`,display:"show"})
       }catch(err){
+        console.log(err)
         updateAlert({bg:"red",content:"session Timed out",display:"show"})
       }
     }else{
