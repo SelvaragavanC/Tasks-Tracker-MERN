@@ -36,7 +36,12 @@ function Todo({_id,Admin_id,users}) {
 
     const handleCheckboxClick = (e)=>{
         const _id = e.target.id
+        const assignedTo = e.target.className
         const checked = e.target.checked
+        if(assignedTo!=user._id){
+            updateAlert({bg:"red",content:"Please dont play with others task",display:"show"})
+            return;
+        }
         try{
             const response = axios.post(`${url}/group/updateTodo/${_id}`,{checked:checked})
             const newTodos = todos.map((element)=>{
@@ -72,7 +77,7 @@ function Todo({_id,Admin_id,users}) {
                     return(
                         <div key={element._id} className='w-full border-2 border-gray-500 flex flex-col gap-2 items-center p-2'>
                             <div className='flex justify-between w-full'>
-                                <input type="checkbox" checked = {element.checked} onChange={handleCheckboxClick} id={element._id}/>
+                                <input type="checkbox" checked = {element.checked} onChange={handleCheckboxClick} id={element._id} className={element.assignedTo}/>
                                 <p>{element.content}</p>
                                 {Admin_id===user._id?
                                     <button className='bg-red-300 p-2 ' onClick={handleDelete} id={element._id}> <span className='pointer-events-none'><AiOutlineDelete/></span></button>
